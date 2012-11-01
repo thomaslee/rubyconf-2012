@@ -46,24 +46,107 @@
                 <section>
                     <h2>hey <strong>rubyconf</strong>!</h2>
                     <p>I'm <strong>Tom Lee</strong> (<a href="http://twitter.com/tglee">@tglee</a>)</p>
-                    <p style="margin-top: 2em">I work for <a href="http://newrelic.com">New Relic</a></p>
+                    <p>I work for <a href="http://newrelic.com">New Relic</a></p>
                     <img src="newrelic.png">
-                    <p>on <strong>Mobile</strong> &amp; <strong>Linux Server Monitoring</strong></p>
-                    <p style="margin-top: 2em">We want your <strong>braaaains</strong> (er, we're <em>hiring</em>)</p>
-                    <p><a href="http://www.newrelic.com/about/jobs">http://www.newrelic.com/about/jobs</a></p>
+                    <p class="snug">on <strong>Mobile</strong> &amp; <strong>Linux Server Monitoring</strong></p>
+                    <p>We want your <strong>braaaains</strong> (er, we're <em>hiring</em>)</p>
+                    <p class="snug"><small><a href="http://www.newrelic.com/about/jobs">http://www.newrelic.com/about/jobs</a></small></p>
                 </section>
 
                 <section>
-                    <h2>Before I start: <strong>racc</strong>. not <em>rack</em>.</h2>
-                    <p style="margin-top: 2em">There's a difference. Honest.</p>
-                    <p style="margin-top: 2em"><strong>Rack</strong> is web server middleware.</p>
-                    <p style="margin-top: 2em"><strong>Racc</strong> is Yacc/Bison for Ruby.</p>
-                    <p style="margin-top: 2em">(We're talking about <strong>Racc</strong>)</p>
+                    <h2>Before we start: <strong>racc</strong>. not <em>rack</em>.</h2>
+                    <p><strong>Racc</strong> is Yacc/Bison for Ruby <span class="tick">✔</span></p>
+                    <p class="snug"><small>We are talking about this ...</small></p>
+                    <hr>
+                    <p><strong>Rack</strong> is web server middleware <span class="cross">✘</span></p>
+                    <p class="snug"><small>... not this.</small></p>
+                </section>
+
+                <section id="overview">
+                    <h2>overview</h2>
+                    <p>generalized <strong>compiler architecture</strong></p>
+                    <p>about <strong>racc</strong></p>
+                    <p>why not <strong>yacc/bison</strong>?</p>
+                    <p>scanning &amp; parsing with <strong>racc</strong></p>
+                    <p>code generation with <strong>ruby</strong></p>
+                    <p>the <strong>grand finale</strong></p>
                 </section>
 
                 <section>
-                    <h2>The <strong>motivation</strong> behind this talk</h2>
-                    <img src="herp_derp.png" style="margin-top: 2em">
+                    <h2>why not <strike>zoidberg</strike> <strong>yacc/bison</strong>?</h2>
+                    <p>Compiler construction is <strong>fun</strong>, dammit.</p>
+                    <p class="snug">Fighting with C/C++, Makefiles, segfaults, etc.? <strong>Not so much.</strong></p>
+                    <p>Let's make it easier to <strong>experiment</strong> with our crazy ideas.</p>
+                    <p>Enter <strong>Ruby</strong> and <strong>Racc</strong>.</p>
+
+                    <aside class="notes">
+                        Why would you ever do this? Who cares, it's fun!
+                        Why Ruby and Racc?
+                        * Doing it in C/C++ with Yacc/Bison sucks.
+                        * You gain a whole lot &amp; lose little.
+                    </aside>
+                </section>
+
+                <section>
+                    <h2>Generalized <strong>Compiler Architecture</strong></h2>
+                    <p>source code <span class="arrow">&rarr;</span> scanner <span class="arrow">&rarr;</span> parser <span class="arrow">&rarr;</span> code generator</p>
+                    <p>TODO: diagram goes here</p>
+                </section>
+
+                <section id="architecture-scanner">
+                    <h2>Generalized <strong>Compiler Architecture</strong></h2>
+                    <h3>scanner (aka tokenizer, lexer ...)</h3>
+                    <p>takes <strong>raw source code</strong> as input</p>
+                    <p class="snug">outputs a stream of <strong>tokens</strong></p>
+                    <p>e.g.</p>
+                    <p class="snug">puts("Hello World")</p>
+                    <p class="snug"><span class="arrow">&rarr;</span> <pre><code contenteditable>[
+  {<span class="ruby-symbol">:type</span> =&gt; TOK_IDENT, <span class="ruby-symbol">:value</span> =&gt; <span class="ruby-string">"puts"</span>},
+  {<span class="ruby-symbol">:type</span> =&gt; TOK_LBRACKET},
+  {<span class="ruby-symbol">:type</span> =&gt; TOK_STRING, <span class="ruby-symbol">:value</span> =&gt; <span class="ruby-string">"Hello World"</span>},
+  {<span class="ruby-symbol">:type</span> =&gt; TOK_RBRACKET}
+]</code></pre></p>
+                </section>
+
+                <section>
+                    <h2>Generalized <strong>Compiler Architecture</strong></h2>
+                    <h3>parser</h3>
+                    <p>takes <strong>tokens</strong> from the scanner as input</p>
+                    <p class="snug">outputs an <strong>intermediate representation</strong> of the input program</p>
+                    <p class="snug">(often <strong>abstract syntax trees</strong> (<strong>AST</strong>) in modern compilers)</p>
+                    <p>assume <em>our</em> parser constructs an <strong>AST</strong></p>
+                </section>
+
+                <section>
+                    <h2>Generalized <strong>Compiler Architecture</strong></h2>
+                    <h3>parser (cont.)</h3>
+                    <p>Input:</p>
+                    <p class="snug"><pre><code contenteditable>[
+  {<span class="ruby-symbol">:type</span> =&gt; TOK_IDENT, <span class="ruby-symbol">:value</span> =&gt; <span class="ruby-string">"puts"</span>},
+  {<span class="ruby-symbol">:type</span> =&gt; TOK_LBRACKET},
+  {<span class="ruby-symbol">:type</span> =&gt; TOK_STRING, <span class="ruby-symbol">:value</span> =&gt; <span class="ruby-string">"Hello World"</span>},
+  {<span class="ruby-symbol">:type</span> =&gt; TOK_RBRACKET}
+]</code></pre></p>
+                    <p>Output:</p>
+                    <p class="snug">TODO</p>
+                </section>
+
+                <section>
+                    <h2>Generalized <strong>Compiler Architecture</strong></h2>
+                    <h3>code generator</h3>
+                    <p>converts the <strong>abstract syntax tree</strong> into the <strong>target language</strong></p>
+                    <p class="snug">(e.g. JVM bytecode, native x86/x64 code, C, JavaScript, ...)
+                </section>
+
+                <section>
+                    <h2>introducing <strong>litshang</strong></h2>
+                    <pre><code contenteditable>#
+# worst. language. ever.
+#
+x = 10;
+x = x + 20;
+print x;
+</code></pre>
                 </section>
 
 				<section>
