@@ -46,6 +46,19 @@ body {
 hr {
   border: 0;
   border-bottom: 1px solid #444;
+  margin-top: 2em;
+}
+
+.arrow {
+  color: #b5bd68;
+}
+
+.cross {
+  color: #c66;
+}
+
+.tick {
+  color: #b5bd68;
 }
 
 /*********************************************
@@ -70,6 +83,18 @@ hr {
     */
 }
 
+.reveal p {
+  margin-top: 2em;
+}
+
+.reveal #overview p, .reveal #architecture-scanner p {
+  margin-top: 1em;
+}
+
+.reveal p.snug, .reveal #architecture-scanner p.snug {
+  margin-top: 0em;
+}
+
 .reveal h1, .reveal h2 strong {
     color: #c5c8c6;
 }
@@ -83,6 +108,10 @@ hr {
     color: #de935f;
 }
 
+.reveal h3 {
+  color: #888;
+}
+
 .reveal h1 small span {
     display: block;
     font-size: 0.6em;
@@ -91,6 +120,14 @@ hr {
 .reveal strong {
     color: #c66;
     font-weight: normal;
+}
+
+.reveal .ruby-symbol {
+    color: #de935f;
+}
+
+.reveal .ruby-string {
+    color: #c66;
 }
 
 /*********************************************
