@@ -87,8 +87,8 @@ hr {
   margin-top: 2em;
 }
 
-.reveal #overview p, .reveal #architecture-scanner p {
-  margin-top: 1em;
+.reveal .snuggy p {
+  margin-top: 1em
 }
 
 .reveal p.snug, .reveal #architecture-scanner p.snug {
