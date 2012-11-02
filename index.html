@@ -43,7 +43,7 @@
                 <h1><small>Rapid</small> Programming Language Prototypes <small>with Ruby and Racc</small></h1>
                 </section>
 
-                <section>
+                <section class="snuggy">
                     <h2>hey <strong>rubyconf</strong>!</h2>
                     <p>I'm <strong>Tom Lee</strong> (<a href="http://twitter.com/tglee">@tglee</a>)</p>
                     <p>I work for <a href="http://newrelic.com">New Relic</a></p>
@@ -51,6 +51,10 @@
                     <p class="snug">on <strong>Mobile</strong> &amp; <strong>Linux Server Monitoring</strong></p>
                     <p>We want your <strong>braaaains</strong> (er, we're <em>hiring</em>)</p>
                     <p class="snug"><small><a href="http://www.newrelic.com/about/jobs">http://www.newrelic.com/about/jobs</a></small></p>
+                </section>
+
+                <section>
+                <h1><small>Rapid</small> Programming Language Prototypes <small>with Ruby and Racc</small></h1>
                 </section>
 
                 <section>
@@ -62,22 +66,78 @@
                     <p class="snug"><small>... not this.</small></p>
                 </section>
 
-                <section id="overview">
+                <section class="snuggy">
                     <h2>overview</h2>
+                    <p>compilers <strong>101</strong></p>
                     <p>generalized <strong>compiler architecture</strong></p>
                     <p>about <strong>racc</strong></p>
                     <p>why not <strong>yacc/bison</strong>?</p>
-                    <p>scanning &amp; parsing with <strong>racc</strong></p>
-                    <p>code generation with <strong>ruby</strong></p>
-                    <p>the <strong>grand finale</strong></p>
+                    <p>introducing <strong>sucklang&reg;</strong></p>
+                    <p>the <strong>end</strong></p>
+                </section>
+
+                <section class="snuggy">
+                    <h2>Compilers <strong>101</strong></h2>
+                    <h3>Scanner</h3>
+                    <p>aka <strong>lexical analyzer</strong> or <strong>tokenizer</strong></p>
+                    <p>takes <strong>raw source code</strong> as input</p>
+                    <p class="snug">outputs a stream of <strong>tokens</strong></p>
+                    <img src="scanner.png">
+                    <aside class="notes">
+                      Little logical units
+                    </aside>
+                </section>
+
+                <section class="snuggy">
+                    <h2>Compilers <strong>101</strong></h2>
+                    <h3>Parser</h3>
+                    <p>takes <strong>tokens</strong> as input</p>
+                    <p class="snug">outputs an <strong>intermediate representation</strong></p>
+                    <p class="snug">(e.g. an <strong>abstract syntax tree</strong>)</p>
+                    <p>the parser <strong>&quot;makes sense&quot;</strong> of the token stream</p>
+                    <p>parsers can be <em>automatically generated</em> from a <strong>grammar</strong></p>
+                    <p class="snug">programs that do this are called <strong>parser generators</strong></p>
+                </section>
+
+                <section class="snuggy">
+                    <h2>Compilers <strong>101</strong></h2>
+                    <h3>Context-Free Grammar</h3>
+                    <p>Or simply <strong>grammar</strong></p>
+                    <p>describes the complete syntax of a (programming) language</p>
+                    <p>usually expressed in Extended Backus-Naur Form (EBNF)</p>
+                    <p class="snuggy">variants of EBNF often used for <strong>parser generator</strong> DSLs</p>
+                </section>
+
+                <section class="snuggy">
+                    <h2>Compilers <strong>101</strong></h2>
+                    <h3>Abstract Syntax Tree</h3>
+                    <p>aka <strong>AST</strong></p>
+                    <p>Rooted tree data structure</p>
+                    <p><strong>In-memory representation</strong> of the input program</p>
+                    <p>&quot;abstract&quot; in that some detail is omitted</p>
+                    <p class="snug">Contrast to a <em>concrete syntax tree</em></p>
+                </section>
+
+                <section>
+                    <h2>Generalized <strong>Compiler Architecture</strong></h2>
+                    <p><img src="compiler-architecture.png"></p>
+                </section>
+
+                <section class="snuggy">
+                    <h2>about <strong>racc</strong></h2>
+                    <p><strong>racc</strong> is a <strong>parser generator</strong></p>
+                    <p class="snug">write your <strong>grammar</strong> using an EBNF-y DSL</p>
+                    <p class="snug">run <strong>racc my_grammar.racc</strong></p>
+                    <p class="snug">this <strong>generates Ruby code</strong> that can parse your &quot;language&quot;</p>
+                    <p><img src="racc-in-compiler-architecture.png"></p>
                 </section>
 
                 <section>
                     <h2>why not <strike>zoidberg</strike> <strong>yacc/bison</strong>?</h2>
-                    <p>Compiler construction is <strong>fun</strong>, dammit.</p>
-                    <p class="snug">Fighting with C/C++, Makefiles, segfaults, etc.? <strong>Not so much.</strong></p>
-                    <p>Let's make it easier to <strong>experiment</strong> with our crazy ideas.</p>
-                    <p>Enter <strong>Ruby</strong> and <strong>Racc</strong>.</p>
+                    <p>Compilers are <strong>fun</strong>, dammit.</p>
+                    <p class="snug">Fighting with C/C++, Makefiles, etc.?</p>
+                    <p class="snug"><strong>Not so much.</strong></p>
+                    <p>Let's make it easier to <strong>experiment</strong> with our crazy ideas!</p>
 
                     <aside class="notes">
                         Why would you ever do this? Who cares, it's fun!
@@ -88,336 +148,81 @@
                 </section>
 
                 <section>
-                    <h2>Generalized <strong>Compiler Architecture</strong></h2>
-                    <p>source code <span class="arrow">&rarr;</span> scanner <span class="arrow">&rarr;</span> parser <span class="arrow">&rarr;</span> code generator</p>
-                    <p>TODO: diagram goes here</p>
-                </section>
-
-                <section id="architecture-scanner">
-                    <h2>Generalized <strong>Compiler Architecture</strong></h2>
-                    <h3>scanner (aka tokenizer, lexer ...)</h3>
-                    <p>takes <strong>raw source code</strong> as input</p>
-                    <p class="snug">outputs a stream of <strong>tokens</strong></p>
-                    <p>e.g.</p>
-                    <p class="snug">puts("Hello World")</p>
-                    <p class="snug"><span class="arrow">&rarr;</span> <pre><code contenteditable>[
-  {<span class="ruby-symbol">:type</span> =&gt; TOK_IDENT, <span class="ruby-symbol">:value</span> =&gt; <span class="ruby-string">"puts"</span>},
-  {<span class="ruby-symbol">:type</span> =&gt; TOK_LBRACKET},
-  {<span class="ruby-symbol">:type</span> =&gt; TOK_STRING, <span class="ruby-symbol">:value</span> =&gt; <span class="ruby-string">"Hello World"</span>},
-  {<span class="ruby-symbol">:type</span> =&gt; TOK_RBRACKET}
-]</code></pre></p>
+                    <h2>introducing <strong>sucklang<small>&reg;</small></strong></h2>
+                    <p>sucklang <strong>sucks by design</strong></p>
+                    <h3 style="margin-top: 1em">grammar</h3>
+                    <pre><code contenteditable>call ::= ID "(" ")"</code></pre>
+                    <p class="snug">(assume <strong>ID</strong> is <strong>/[a-zA-Z_][a-zA-Z_0-9]*/</strong>)</p>
+                    <h3 style="margin-top: 1em">example</h3>
+                    <pre><code contenteditable>ohai()</code></pre>
                 </section>
 
                 <section>
-                    <h2>Generalized <strong>Compiler Architecture</strong></h2>
-                    <h3>parser</h3>
-                    <p>takes <strong>tokens</strong> from the scanner as input</p>
-                    <p class="snug">outputs an <strong>intermediate representation</strong> of the input program</p>
-                    <p class="snug">(often <strong>abstract syntax trees</strong> (<strong>AST</strong>) in modern compilers)</p>
-                    <p>assume <em>our</em> parser constructs an <strong>AST</strong></p>
+                    <h2>introducing <strong>sucklang<small>&reg;</small></strong></h2>
+                    <h3>implementing the scanner</h3>
+                    <p>racc tokens are <strong>two-element sequences</strong></p>
+                    <p class="snug">the <strong>first</strong> element is the token <strong>type</strong></p>
+                    <p class="snug">the <strong>second</strong> element is the token <strong>value</strong></p>
+                    <p>(e.g. <code>[:ID, "ohai"]</code>)</p>
+                    <p>Let's write a scanner!</p>
+                </section>
+
+                <section class="snuggy">
+                    <h2>introducing <strong>sucklang<small>&reg;</small></strong></h2>
+                    <h3>implementing the parser</h3>
+                    <p>now we need to write our <strong>racc grammar</strong>!</p>
+                    <p>first, make sure you've got racc installed:</p>
+                    <p class="snug"><code>gem install racc</code></p>
+                    <p>invoking racc (I use <strong>rbenv</strong>):</p>
+                    <p class="snug"><pre><code contenteditable>rbenv exec racc -o lib/sucklang/parser.rb \
+                    lib/sucklang/parser.racc</code></pre></p>
+                    <p><strong>hot tip</strong>: add this to a <code>Rakefile</code> :)</p>
+                </section>
+
+                <section class="snuggy">
+                    <h2>introducing <strong>sucklang<small>&reg;</small></strong></h2>
+                    <h3>building an AST</h3>
+                    <p>our parser <strong>doesn't output anything</strong> yet</p>
+                    <p>let's build an AST!</p>
+                </section>
+
+                <section class="snuggy">
+                    <h2>introducing <strong>sucklang<small>&reg;</small></strong></h2>
+                    <h3>implementing the code generator</h3>
+                    <p>nearly there! the parser now constructs an AST</p>
+                    <p>let's generate C code for kicks.</p>
                 </section>
 
                 <section>
-                    <h2>Generalized <strong>Compiler Architecture</strong></h2>
-                    <h3>parser (cont.)</h3>
-                    <p>Input:</p>
-                    <p class="snug"><pre><code contenteditable>[
-  {<span class="ruby-symbol">:type</span> =&gt; TOK_IDENT, <span class="ruby-symbol">:value</span> =&gt; <span class="ruby-string">"puts"</span>},
-  {<span class="ruby-symbol">:type</span> =&gt; TOK_LBRACKET},
-  {<span class="ruby-symbol">:type</span> =&gt; TOK_STRING, <span class="ruby-symbol">:value</span> =&gt; <span class="ruby-string">"Hello World"</span>},
-  {<span class="ruby-symbol">:type</span> =&gt; TOK_RBRACKET}
-]</code></pre></p>
-                    <p>Output:</p>
-                    <p class="snug">TODO</p>
+                    <h2>introducing <strong>sucklang<small>&reg;</small></strong></h2>
+                    <h3>the grand finale</h3>
+                    <p><small>*gulp*</small></p>
                 </section>
 
                 <section>
-                    <h2>Generalized <strong>Compiler Architecture</strong></h2>
-                    <h3>code generator</h3>
-                    <p>converts the <strong>abstract syntax tree</strong> into the <strong>target language</strong></p>
-                    <p class="snug">(e.g. JVM bytecode, native x86/x64 code, C, JavaScript, ...)
+                    <h2>introducing <strong>sucklang<small>&reg;</small></strong></h2>
+                    <h3>a little more?</h3>
+                </section>
+
+                <section class="snuggy">
+                    <h2>stuff I <strong>didn't</strong> cover</h2>
+                    <h3>or: exercises for the reader/attendee/whatever</h3>
+                    <p>More complex grammars!</p>
+                    <p>New backends</p>
+                    <p>AST &amp; peephole optimization</p>
+                    <p>... and all the <strike>hard</strike> fun stuff :)</p>
                 </section>
 
                 <section>
-                    <h2>introducing <strong>litshang</strong></h2>
-                    <pre><code contenteditable>#
-# worst. language. ever.
-#
-x = 10;
-x = x + 20;
-print x;
-</code></pre>
+                    <h2>the <strong>end</strong></h2>
+                    <p>New Relic</p>
+                    <p class="snug"><a href="http://www.newrelic.com">http://newrelic.com</a></p>
+
+                    <p>Tom Lee</p>
+                    <p class="snug"><a href="http://tomlee.co">http://tomlee.co</a></p>
+                    <p class="snug"><a href="http://github.com/thomaslee">http://github.com/thomaslee</a></p>
+                    <p class="snug"><a href="http://www.twitter.com/tglee">@tglee</a></p>
                 </section>
-
-				<section>
-					<h1>Reveal.js</h1>
-					<h3>HTML Presentations Made Easy</h3>
-				</section>
-				
-				<section>
-					<h2>Heads Up</h2>
-					<p>
-						reveal.js is a framework for easily creating beautiful presentations using HTML. You'll need a browser with 
-						support for CSS 3D transforms to see it in its full glory.
-					</p>
-					<p>
-						<i><small>- <a href="http://hakim.se">Hakim El Hattab</a> / <a href="http://twitter.com/hakimel">@hakimel</a></small></i>
-					</p>
-
-					<aside class="notes">
-						Oh hey, these are some notes. They'll be hidden in your presentation, but you can see them if you run the speaker notes server.
-					</aside>
-				</section>
-				
-				<!-- Example of nested vertical slides -->
-				<section>
-					<section>
-						<h2>Vertical Slides</h2>
-						<p>
-							Slides can be nested inside of other slides,
-							try pressing <a href="#/2/1">down</a>.
-						</p>
-						<a href="#/2/1" class="image">
-							<img width="178" height="238" src="https://s3.amazonaws.com/hakim-static/reveal-js/arrow.png" alt="Down arrow">
-						</a>
-					</section>
-					<section>
-						<h2>Basement Level 1</h2>
-						<p>Press down or up to navigate.</p>
-					</section>
-					<section>
-						<h2>Basement Level 2</h2>
-						<p>Cornify</p>
-						<a class="test" href="http://cornify.com">
-							<img width="280" height="326" src="https://s3.amazonaws.com/hakim-static/reveal-js/cornify.gif" alt="Unicorn">
-						</a>
-					</section>
-					<section>
-						<h2>Basement Level 3</h2>
-						<p>That's it, time to go back up.</p>
-						<a href="#/2" class="image">
-							<img width="178" height="238" src="https://s3.amazonaws.com/hakim-static/reveal-js/arrow.png" alt="Up arrow" style="-webkit-transform: rotate(180deg);">
-						</a>
-					</section>
-				</section>
-
-				<section>
-					<h2>Holistic Overview</h2>
-					<p>
-						Press <strong>ESC</strong> to enter the slide overview!
-					</p>
-				</section>
-
-				<section>
-					<h2>rvl.io</h2>
-					<p>
-						If you don't like writing slides in HTML you can use the online editor <a href="http://www.rvl.io" target="_blank">rvl.io</a>.
-					</p>
-				</section>
-
-				<section>
-					<h2>Works in Mobile Safari</h2>
-					<p>
-						Try it out! You can swipe through the slides and pinch your way to the overview.
-					</p>
-				</section>
-
-				<section>
-					<h2>Marvelous Unordered List</h2>
-					<ul>
-						<li>No order here</li>
-						<li>Or here</li>
-						<li>Or here</li>
-						<li>Or here</li>
-					</ul>
-				</section>
-				
-				<section>
-					<h2>Fantastic Ordered List</h2>
-					<ol>
-						<li>One is smaller than...</li>
-						<li>Two is smaller than...</li>
-						<li>Three!</li>
-					</ol>
-				</section>
-
-				<section data-markdown>
-					## Markdown support
-					
-					For those of you who like that sort of thing. Instructions and a bit more info available [here](https://github.com/hakimel/reveal.js#markdown).
-
-					<pre><code contenteditable style="margin-top: 20px;">&lt;section data-markdown&gt;
-  ## Markdown support
-
-  For those of you who like that sort of thing. 
-  Instructions and a bit more info available [here](https://github.com/hakimel/reveal.js#markdown).
-&lt;/section&gt;
-					</code></pre>
-				</section>
-
-				<section>
-					<h2>Transition Styles</h2>
-					<p>
-						You can select from different transitions, like: <br>
-						<a href="http://lab.hakim.se/reveal-js/?transition=cube">Cube</a> -
-						<a href="http://lab.hakim.se/reveal-js/?transition=page">Page</a> -
-						<a href="http://lab.hakim.se/reveal-js/?transition=concave">Concave</a> -
-						<a href="http://lab.hakim.se/reveal-js/?transition=linear">Linear</a>
-					</p>
-				</section>
-
-				<section>
-					<h2>Themes</h2>
-					<p>
-						Reveal.js comes with a few themes built in: <br>
-						<a href="http://lab.hakim.se/reveal-js/?theme=sky">Sky</a> -
-						<a href="http://lab.hakim.se/reveal-js/?theme=beige">Beige</a> -
-						<a href="http://lab.hakim.se/reveal-js/?theme=simple">Simple</a> -
-						<a href="http://lab.hakim.se/reveal-js/">Default</a>
-					</p>
-					<p>
-						<small>
-							* Theme demos are loaded after the presentation which leads to flicker. In production you should load your theme in the <code>&lt;head&gt;</code> using a <code>&lt;link&gt;</code>.
-						</small>
-					</p>
-				</section>
-
-				<section>
-					<section data-state="alert">
-						<h2>Global State</h2>
-						<p>
-							Set <code>data-state="something"</code> on a slide and <code>"something"</code>
-							will be added as a class to the document element when the slide is open. This lets you
-							apply broader style changes, like switching the background.
-						</p>
-						<a href="#/7/1" class="image">
-							<img width="178" height="238" src="https://s3.amazonaws.com/hakim-static/reveal-js/arrow.png" alt="Down arrow">
-						</a>
-					</section>
-					<section data-state="blackout">
-						<h2>"blackout"</h2>
-						<a href="#/7/2" class="image">
-							<img width="178" height="238" src="https://s3.amazonaws.com/hakim-static/reveal-js/arrow.png" alt="Down arrow">
-						</a>
-					</section>
-					<section data-state="soothe">
-						<h2>"soothe"</h2>
-						<a href="#/7/0" class="image">
-							<img width="178" height="238" src="https://s3.amazonaws.com/hakim-static/reveal-js/arrow.png" alt="Up arrow" style="-webkit-transform: rotate(180deg);">
-						</a>
-					</section>
-				</section>
-
-				<section data-state="customevent">
-					<h2>Custom Events</h2>
-					<p>
-						Additionally custom events can be triggered on a per slide basis by binding to the <code>data-state</code> name.
-					</p>
-					<pre><code contenteditable style="font-size: 18px; margin-top: 20px;">Reveal.addEventListener( 'customevent', function() {
-	console.log( '"customevent" has fired' );
-} );
-					</code></pre>
-				</section>
-
-				<section>
-					<h2>Clever Quotes</h2>
-					<p>
-						These guys come in two forms, inline: <q cite="http://searchservervirtualization.techtarget.com/definition/Our-Favorite-Technology-Quotations">
-						The nice thing about standards is that there are so many to choose from</q> and block:
-					</p>
-					<blockquote cite="http://searchservervirtualization.techtarget.com/definition/Our-Favorite-Technology-Quotations">
-						For years there has been a theory that millions of monkeys typing at random on millions of typewriters would 
-						reproduce the entire works of Shakespeare. The Internet has proven this theory to be untrue.
-					</blockquote>
-				</section>
-				
-				<section>
-					<h2>Pretty Code</h2>
-					<pre><code contenteditable>
-function linkify( selector ) {
-  if( supports3DTransforms ) {
-    
-    var nodes = document.querySelectorAll( selector );
-
-    for( var i = 0, len = nodes.length; i &lt; len; i++ ) {
-      var node = nodes[i];
-
-      if( !node.className ) ) {
-        node.className += ' roll';
-      }
-    };
-  }
-}
-					</code></pre>
-					<p>Courtesy of <a href="http://softwaremaniacs.org/soft/highlight/en/description/">highlight.js</a>.</p>
-				</section>
-				
-				<section>
-					<h2>Intergalactic Interconnections</h2>
-					<p>
-						You can link between slides internally,
-						<a href="#/2/3">like this</a>.
-					</p>
-				</section>
-
-				<section>
-					<h2>Fragmented Views</h2>
-					<p>Hit the next arrow...</p>
-					<p class="fragment">... to step through ...</p>
-					<ol>
-						<li class="fragment"><code>any type</code></li>
-						<li class="fragment"><em>of view</em></li>
-						<li class="fragment"><strong>fragments</strong></li>
-					</ol>
-				</section>
-				
-				<section>
-					<h2>Spectacular image!</h2>
-					<a class="image" href="http://hakim.se/experiments/html5/breakdom/" target="_blank">
-						<img width="320" height="412" src="https://s3.amazonaws.com/hakim-static/reveal-js/breakdom.png" alt="BreakDOM game screenshot">
-					</a>
-				</section>
-				
-				<section>
-					<h2>Export to PDF</h2>
-					<p>Presentations can be <a href="https://github.com/hakimel/reveal.js#pdf-export">exported to PDF</a>, below is an example that's been uploaded to SlideShare.</p>
-					<iframe id="slideshare" src="http://www.slideshare.net/slideshow/embed_code/13872948" width="455" height="356" style="margin:0;overflow:hidden;border:1px solid #CCC;border-width:1px 1px 0;margin-bottom:5px" allowfullscreen> </iframe>
-					<script>
-						document.getElementById('slideshare').attributeName = 'allowfullscreen';
-					</script>
-				</section>
-				
-				<section>
-					<h2>Stellar Links</h2>
-					<ul>
-						<li><a href="https://github.com/hakimel/reveal.js">Source code on GitHub</a></li>
-						<li><a href="http://hakim.se/projects/reveal-js">Leave feedback on my site</a></li>
-						<li><a href="http://twitter.com/hakimel">Follow me on Twitter</a></li>
-					</ul>
-				</section>
-
-				<section>
-					<h2>It's free</h2>
-					<p>
-						reveal.js and <a href="http://www.rvl.io">rvl.io</a> are entirely free but if you'd like to support the projects you can donate below. 
-						Donations will go towards hosting and domain costs.
-					</p>
-					<form action="https://www.paypal.com/cgi-bin/webscr" method="post">
-						<input type="hidden" name="cmd" value="_donations">
-						<input type="hidden" name="business" value="hakim.elhattab@gmail.com">
-						<input type="hidden" name="lc" value="US">
-						<input type="hidden" name="item_name" value="reveal.js / rvl.io">
-						<input type="hidden" name="no_note" value="0">
-						<input type="hidden" name="currency_code" value="USD">
-						<input type="hidden" name="bn" value="PP-DonationsBF:btn_donate_LG.gif:NonHostedGuest">
-						<input type="image" src="https://www.paypalobjects.com/en_US/i/btn/btn_donate_LG.gif" border="0" name="submit" alt="PayPal - The safer, easier way to pay online!">
-					</form>
-				</section>
-				
-				<section>
-					<h1>THE END</h1>
-					<h3>BY Hakim El Hattab / hakim.se</h3>
-				</section>
 			</div>
 
 			<!-- The navigational controls UI -->
