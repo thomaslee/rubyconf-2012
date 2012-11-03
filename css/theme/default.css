@@ -25,9 +25,14 @@
  * GLOBAL STYLES
  *********************************************/
 
+.reveal pre code {
+  font-size: 1.2em;
+  line-height: 1em;
+}
+
 body {
 	font-family: 'Lato', Times, 'Times New Roman', serif;
-	font-size: 36px;
+	font-size: 24px;
 	font-weight: 200;
 	letter-spacing: -0.02em;
 	color: #eee;
@@ -41,6 +46,7 @@ body {
 	background: -ms-radial-gradient(center, ellipse cover,  rgba(85,90,95,1) 0%,rgba(28,30,32,1) 100%);
 	background: radial-gradient(center, ellipse cover,  rgba(85,90,95,1) 0%,rgba(28,30,32,1) 100%);
     */
+  margin-top: 2em;
 }
 
 hr {
