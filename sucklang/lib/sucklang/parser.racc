@@ -1,0 +1,22 @@
+class Sucklang::Parser
+
+rule
+
+call : ID "(" ")" {
+  result = [:script, [:call, val[0]]]
+}
+
+end
+
+---- inner ----
+
+  def parse(tokens)
+    @tokens = tokens
+
+    do_parse
+  end
+
+  def next_token
+    @tokens.shift
+  end
+

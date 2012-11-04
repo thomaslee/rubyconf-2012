@@ -1,0 +1,6 @@
+task "lib/sucklang/parser.rb" => "lib/sucklang/parser.racc" do
+  sh "rbenv exec racc -o lib/sucklang/parser.rb lib/sucklang/parser.racc"
+end
+
+task :default => "lib/sucklang/parser.rb"
+

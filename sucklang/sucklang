@@ -1,0 +1,15 @@
+#!/usr/bin/env ruby
+
+require './lib/sucklang/scanner'
+require './lib/sucklang/parser'
+require './lib/sucklang/code_generator'
+
+tokens = Sucklang::Scanner.scan(STDIN.read)
+ast = Sucklang::Parser.new.parse(tokens)
+code = Sucklang::CodeGenerator::C.new.compile(ast)
+
+File.open("a.out.c", "w+") do |f|
+  f.write(code)
+end
+system("gcc a.out.c")
+
